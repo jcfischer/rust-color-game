@@ -1,0 +1,9 @@
+[package]
+authors = ["Jens-Christian Fischer <jens-christian.fischer@switch.ch>"]
+name = "sudoku"
+version = "0.1.0"
+[dependencies]
+piston = "*"
+piston2d-graphics = "*"
+piston2d-opengl_graphics = "*"
+pistoncore-glutin_window = "*"
