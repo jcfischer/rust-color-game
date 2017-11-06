@@ -5,7 +5,7 @@ const SIZE: usize = 0;
 
 /// Stores game board information
 pub struct Gameboard {
-    /// Stores the content of the celss.
+    /// Stores the content of the cells.
     /// `0` is an empty cell
     pub cells: [[u8; SIZE]; SIZE],
 }
