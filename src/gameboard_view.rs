@@ -37,7 +37,7 @@ impl GameboardViewSettings {
         GameboardViewSettings {
             position: [10.0; 2],
             size: 400.0,
-            background_color: [0.8, 0.8, 1.0, 1.0],
+            background_color: [1.0, 1.0, 1.0, 1.0],
             border_color: [0.0, 0.0, 0.2, 1.0],
             board_edge_color: [0.0, 0.0, 0.2, 1.0],
             section_edge_color: [0.0, 0.0, 0.2, 1.0],
@@ -66,7 +66,7 @@ impl GameboardView {
 
     /// Draw gameboard
     pub fn draw<G: Graphics>(&self, controller: &GameboardController, c: &Context, g: &mut G) {
-        use graphics::{Line, Rectangle};
+        use graphics::Rectangle;
 
         let ref settings = self.settings;
         let board_rect = [
@@ -90,40 +90,37 @@ impl GameboardView {
                 .draw(cell_rect, &c.draw_state, c.transform, g);
         }
 
-        // Draw Cell borders
-        let cell_edge = Line::new(settings.cell_edge_color, settings.cell_edge_radius);
-        for i in 0..9 {
-            // Skip lines that are covered by sections
-            if (i % 3) == 0 { continue; }
+        // // Draw Cell borders
+        // let cell_edge = Line::new(settings.cell_edge_color, settings.cell_edge_radius);
+        // for i in 0..9 {
 
-            let x = settings.position[0] + i as f64 / 9.0 * settings.size;
-            let y = settings.position[1] + i as f64 / 9.0 * settings.size;
+        //     let x = settings.position[0] + i as f64 / 9.0 * settings.size;
+        //     let y = settings.position[1] + i as f64 / 9.0 * settings.size;
 
-            let x2 = settings.position[0] + settings.size;
-            let y2 = settings.position[1] + settings.size;
+        //     let x2 = settings.position[0] + settings.size;
+        //     let y2 = settings.position[1] + settings.size;
 
-            let vline = [x, settings.position[1], x, y2];
-            cell_edge.draw(vline, &c.draw_state, c.transform, g);
+        //     let vline = [x, settings.position[1], x, y2];
+        //     cell_edge.draw(vline, &c.draw_state, c.transform, g);
 
-            let hline = [settings.position[0], y, x2, y];
-            cell_edge.draw(hline, &c.draw_state, c.transform, g);
+        //     let hline = [settings.position[0], y, x2, y];
+        //     cell_edge.draw(hline, &c.draw_state, c.transform, g);
+        // }
+
+        for j in 0..7 {
+            for i in 0..7 {
+                if let Some(color) = controller.gameboard.color([i, j]) {
+                    let cell_size = settings.size / 9.0;
+                    let pos = [i as f64 * cell_size, j as f64 * cell_size];
+                    let cell_rect = [
+                        settings.position[0] + pos[0], settings.position[1] + pos[1],
+                        cell_size, cell_size
+                    ];
+                    Rectangle::new(color)
+                        .draw(cell_rect, &c.draw_state, c.transform, g);
+                }
+            }
         }
-
-      // Draw section borders.
-      let section_edge = Line::new(settings.section_edge_color, settings.section_edge_radius);
-      for i in 0..3 {
-          // Set up coordinates.
-          let x = settings.position[0] + i as f64 / 3.0 * settings.size;
-          let y = settings.position[1] + i as f64 / 3.0 * settings.size;
-          let x2 = settings.position[0] + settings.size;
-          let y2 = settings.position[1] + settings.size;
-
-          let vline = [x, settings.position[1], x, y2];
-          section_edge.draw(vline, &c.draw_state, c.transform, g);
-
-          let hline = [settings.position[0], y, x2, y];
-          section_edge.draw(hline, &c.draw_state, c.transform, g);
-      }
 
       // Draw board edge.
       Rectangle::new_border(settings.board_edge_color, settings.board_edge_radius)

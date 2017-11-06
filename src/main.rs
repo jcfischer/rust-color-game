@@ -15,11 +15,14 @@ use opengl_graphics::{OpenGL, GlGraphics};
 use piston::event_loop::{Events, EventSettings, EventLoop};
 use piston::input::RenderEvent;
 
-
+pub use player::Player;
 pub use gameboard::Gameboard;
 pub use gameboard_controller::GameboardController;
 pub use gameboard_view::{GameboardView, GameboardViewSettings};
 
+use gameboard::{COLOR_1, COLOR_2, COLOR_3};
+
+mod player;
 mod gameboard;
 mod gameboard_controller;
 mod gameboard_view;
@@ -39,7 +42,14 @@ fn main() {
     let mut gl = GlGraphics::new(opengl);
 
     let gameboard = Gameboard::new();
-    let mut gameboard_controller = GameboardController::new(gameboard);
+
+    let player_1 = Player::new(COLOR_1);
+    let player_2 = Player::new(COLOR_2);
+    let player_3 = Player::new(COLOR_3);
+
+    let players = vec![player_1, player_2, player_3];
+
+    let mut gameboard_controller = GameboardController::new(gameboard, players);
     let gameboard_view_settings = GameboardViewSettings::new();
     let gameboard_view = GameboardView::new(gameboard_view_settings);
 
@@ -58,5 +68,13 @@ fn main() {
         }
     }
 
+
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn it_works() {
+    }
 
 }
