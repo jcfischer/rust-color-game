@@ -34,6 +34,10 @@ impl GameboardController {
     fn current_player(&self) -> Player {
         return self.players[self.current_index];
     }
+    fn next_player(&mut self) {
+        self.current_index += 1;
+        self.current_index %= self.players.len();
+    }
 
     /// Handles Events
     pub fn event<E: GenericEvent>(&mut self, pos: [f64; 2], size: f64, e: &E) {
@@ -52,9 +56,19 @@ impl GameboardController {
                 // compute the cell position
                 let cell_x = (x / size * 9.0) as usize;
                 let cell_y = (y / size * 9.0) as usize;
-                self.selected_cell = Some([cell_x, cell_y]);
                 let player = self.current_player();
                 self.gameboard.set_player([cell_x, cell_y], player);
+            }
+            
+            self.next_player();
+            
+            let player = self.current_player();
+            if !player.brain.is_human {
+                let pos = self.gameboard.random_free_position();
+                let cell_x = pos[0];
+                let cell_y = pos[1];
+                self.gameboard.set_player([cell_x, cell_y], player);
+                self.next_player();
             }
         }
 

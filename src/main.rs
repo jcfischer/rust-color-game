@@ -15,6 +15,7 @@ use opengl_graphics::{OpenGL, GlGraphics};
 use piston::event_loop::{Events, EventSettings, EventLoop};
 use piston::input::RenderEvent;
 
+pub use brain::Brain;
 pub use player::Player;
 pub use gameboard::Gameboard;
 pub use gameboard_controller::GameboardController;
@@ -22,6 +23,7 @@ pub use gameboard_view::{GameboardView, GameboardViewSettings};
 
 use gameboard::{COLOR_1, COLOR_2, COLOR_3};
 
+mod brain;
 mod player;
 mod gameboard;
 mod gameboard_controller;
@@ -43,9 +45,9 @@ fn main() {
 
     let gameboard = Gameboard::new();
 
-    let player_1 = Player::new(COLOR_1);
-    let player_2 = Player::new(COLOR_2);
-    let player_3 = Player::new(COLOR_3);
+    let player_1 = Player::new(COLOR_1, Brain::new(true));
+    let player_2 = Player::new(COLOR_2, Brain::new(true));
+    let player_3 = Player::new(COLOR_3, Brain::new(false));
 
     let players = vec![player_1, player_2, player_3];
 

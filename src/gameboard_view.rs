@@ -107,8 +107,8 @@ impl GameboardView {
         //     cell_edge.draw(hline, &c.draw_state, c.transform, g);
         // }
 
-        for j in 0..7 {
-            for i in 0..7 {
+        for j in 0..8 {
+            for i in 0..8 {
                 let player = controller.gameboard.player([i, j]);
                 let cell_size = settings.size / 9.0;
                 let pos = [i as f64 * cell_size, j as f64 * cell_size];
