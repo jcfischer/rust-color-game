@@ -78,17 +78,17 @@ impl GameboardView {
         Rectangle::new(settings.background_color)
             .draw(board_rect, &c.draw_state, c.transform, g);
 
-        // Draw selected cell background.
-        if let Some(ind) = controller.selected_cell {
-            let cell_size = settings.size / 9.0;
-            let pos = [ind[0] as f64 * cell_size, ind[1] as f64 * cell_size];
-            let cell_rect = [
-                settings.position[0] + pos[0], settings.position[1] + pos[1],
-                cell_size, cell_size
-            ];
-            Rectangle::new(settings.selected_cell_background_color)
-                .draw(cell_rect, &c.draw_state, c.transform, g);
-        }
+        // // Draw selected cell background.
+        // if let Some(ind) = controller.selected_cell {
+        //     let cell_size = settings.size / 8.0;
+        //     let pos = [ind[0] as f64 * cell_size, ind[1] as f64 * cell_size];
+        //     let cell_rect = [
+        //         settings.position[0] + pos[0], settings.position[1] + pos[1],
+        //         cell_size, cell_size
+        //     ];
+        //     Rectangle::new(settings.selected_cell_background_color)
+        //         .draw(cell_rect, &c.draw_state, c.transform, g);
+        // }
 
         // // Draw Cell borders
         // let cell_edge = Line::new(settings.cell_edge_color, settings.cell_edge_radius);
@@ -107,10 +107,10 @@ impl GameboardView {
         //     cell_edge.draw(hline, &c.draw_state, c.transform, g);
         // }
 
-        for j in 0..8 {
-            for i in 0..8 {
+        for j in 0..7 {
+            for i in 0..7 {
                 let player = controller.gameboard.player([i, j]);
-                let cell_size = settings.size / 9.0;
+                let cell_size = settings.size / 8.0;
                 let pos = [i as f64 * cell_size, j as f64 * cell_size];
                 let cell_rect = [
                     settings.position[0] + pos[0], settings.position[1] + pos[1],

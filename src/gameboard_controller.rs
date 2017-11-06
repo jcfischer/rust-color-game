@@ -54,8 +54,8 @@ impl GameboardController {
             // check that coordinates are inside boundary
             if x >= 0.0 && x < size && y >= 0.0 && y < size {
                 // compute the cell position
-                let cell_x = (x / size * 9.0) as usize;
-                let cell_y = (y / size * 9.0) as usize;
+                let cell_x = (x / size * 8.0) as usize;
+                let cell_y = (y / size * 8.0) as usize;
                 let player = self.current_player();
                 self.gameboard.set_player([cell_x, cell_y], player);
             }

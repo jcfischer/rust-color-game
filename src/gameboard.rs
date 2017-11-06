@@ -7,7 +7,7 @@ use Brain;
 use Player;
 
 /// Size of game board
-const SIZE: usize = 9;
+const SIZE: usize = 8;
 
 pub const COLOR_0 : Color = [1.0, 1.0, 1.0, 1.0];
 pub const COLOR_1 : Color = [0.0, 0.32, 0.28, 1.0];
@@ -33,12 +33,12 @@ impl Gameboard {
 
      /// Gets the color at cell location.
     pub fn player(&self, ind: [usize; 2]) -> Player {
-        return self.cells[ind[1]][ind[0]];
+        return self.cells[ind[0]][ind[1]];
     }
 
     /// Set cell value to a player
     pub fn set_player(&mut self, ind: [usize; 2], player: Player) {
-        self.cells[ind[1]][ind[0]] = player;
+        self.cells[ind[0]][ind[1]] = player;
     }
     
     ///
