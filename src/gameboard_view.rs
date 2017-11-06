@@ -109,16 +109,15 @@ impl GameboardView {
 
         for j in 0..7 {
             for i in 0..7 {
-                if let Some(color) = controller.gameboard.color([i, j]) {
-                    let cell_size = settings.size / 9.0;
-                    let pos = [i as f64 * cell_size, j as f64 * cell_size];
-                    let cell_rect = [
-                        settings.position[0] + pos[0], settings.position[1] + pos[1],
-                        cell_size, cell_size
-                    ];
-                    Rectangle::new(color)
-                        .draw(cell_rect, &c.draw_state, c.transform, g);
-                }
+                let player = controller.gameboard.player([i, j]);
+                let cell_size = settings.size / 9.0;
+                let pos = [i as f64 * cell_size, j as f64 * cell_size];
+                let cell_rect = [
+                    settings.position[0] + pos[0], settings.position[1] + pos[1],
+                    cell_size, cell_size
+                ];
+                Rectangle::new(player.color)
+                    .draw(cell_rect, &c.draw_state, c.transform, g);
             }
         }
 

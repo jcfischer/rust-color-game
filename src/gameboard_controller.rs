@@ -16,7 +16,7 @@ pub struct GameboardController {
     /// Stores the players
     pub players: Vec<Player>,
     /// store the current player
-    pub player: Player,
+    pub current_index: usize,
 }
 
 impl GameboardController {
@@ -27,10 +27,13 @@ impl GameboardController {
             selected_cell: None,
             cursor_pos: [0.0; 2],
             players: players,
-            player: players[0],
+            current_index: 0,
         }
     }
 
+    fn current_player(&self) -> Player {
+        return self.players[self.current_index];
+    }
 
     /// Handles Events
     pub fn event<E: GenericEvent>(&mut self, pos: [f64; 2], size: f64, e: &E) {
@@ -39,8 +42,6 @@ impl GameboardController {
         if let Some(pos) = e.mouse_cursor_args() {
             self.cursor_pos = pos;
         }
-
-
 
         if let Some(Button::Mouse(MouseButton::Left)) = e.press_args() {
             // Find coordinates relative to upper corner
@@ -52,7 +53,8 @@ impl GameboardController {
                 let cell_x = (x / size * 9.0) as usize;
                 let cell_y = (y / size * 9.0) as usize;
                 self.selected_cell = Some([cell_x, cell_y]);
-                self.gameboard.set_player([cell_x, cell_y], &self.player);
+                let player = self.current_player();
+                self.gameboard.set_player([cell_x, cell_y], player);
             }
         }
 
