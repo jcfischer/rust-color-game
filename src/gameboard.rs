@@ -50,9 +50,15 @@ impl Gameboard {
             let c = self.cells[x][y].color;
             println!("{}:{} - {}-{}-{}-{}", x, y, c[0], c[1], c[2], c[3]);
 
-            if self.cells[x][y].color == COLOR_0 {
+            if self.is_free([x,y]) {
                 return [x, y];
             }
         }
     }
+
+    /// checks to see if a position is free
+    pub fn is_free(&mut self, pos: [usize; 2]) -> bool {
+        self.cells[pos[0]][pos[1]].color == COLOR_0
+    }
+
 }

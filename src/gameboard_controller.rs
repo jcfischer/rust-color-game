@@ -58,19 +58,22 @@ impl GameboardController {
                 let cell_y = (y / size * 9.0) as usize;
                 println!("Clicked {}:{}", cell_x, cell_y);
                 let player = self.current_player();
-                self.gameboard.set_player([cell_x, cell_y], player);
+
+                if self.gameboard.is_free([cell_x, cell_y]) {
+                    self.gameboard.set_player([cell_x, cell_y], player);
+                    self.next_player();
+
+                    let player = self.current_player();
+                    if !player.brain.is_human {
+                        let pos = self.gameboard.random_free_position();
+                        let cell_x = pos[0];
+                        let cell_y = pos[1];
+                        self.gameboard.set_player([cell_x, cell_y], player);
+                        self.next_player();
+                    }
+                }
             }
 
-            self.next_player();
-
-            let player = self.current_player();
-            if !player.brain.is_human {
-                let pos = self.gameboard.random_free_position();
-                let cell_x = pos[0];
-                let cell_y = pos[1];
-                self.gameboard.set_player([cell_x, cell_y], player);
-                self.next_player();
-            }
         }
 
     }
