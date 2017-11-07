@@ -45,7 +45,7 @@ impl GameboardViewSettings {
             board_edge_radius: 3.0,
             section_edge_radius: 2.0,
             cell_edge_radius: 1.0,
-            selected_cell_background_color: [0.9, 0.9, 1.0, 1.0],
+            selected_cell_background_color: [0.9, 0.1, 1.0, 1.0],
         }
     }
 }
@@ -66,7 +66,7 @@ impl GameboardView {
 
     /// Draw gameboard
     pub fn draw<G: Graphics>(&self, controller: &GameboardController, c: &Context, g: &mut G) {
-        use graphics::Rectangle;
+        use graphics::{Line, Rectangle};
 
         let ref settings = self.settings;
         let board_rect = [
@@ -78,39 +78,39 @@ impl GameboardView {
         Rectangle::new(settings.background_color)
             .draw(board_rect, &c.draw_state, c.transform, g);
 
-        // // Draw selected cell background.
-        // if let Some(ind) = controller.selected_cell {
-        //     let cell_size = settings.size / 8.0;
-        //     let pos = [ind[0] as f64 * cell_size, ind[1] as f64 * cell_size];
-        //     let cell_rect = [
-        //         settings.position[0] + pos[0], settings.position[1] + pos[1],
-        //         cell_size, cell_size
-        //     ];
-        //     Rectangle::new(settings.selected_cell_background_color)
-        //         .draw(cell_rect, &c.draw_state, c.transform, g);
-        // }
+        // Draw selected cell background.
+        if let Some(ind) = controller.selected_cell {
+            let cell_size = settings.size / 8.0;
+            let pos = [ind[0] as f64 * cell_size, ind[1] as f64 * cell_size];
+            let cell_rect = [
+                settings.position[0] + pos[0], settings.position[1] + pos[1],
+                cell_size, cell_size
+            ];
+            Rectangle::new(settings.selected_cell_background_color)
+                .draw(cell_rect, &c.draw_state, c.transform, g);
+        }
 
-        // // Draw Cell borders
-        // let cell_edge = Line::new(settings.cell_edge_color, settings.cell_edge_radius);
-        // for i in 0..9 {
+        // Draw Cell borders
+        let cell_edge = Line::new(settings.cell_edge_color, settings.cell_edge_radius);
+        for i in 0..9 {
 
-        //     let x = settings.position[0] + i as f64 / 9.0 * settings.size;
-        //     let y = settings.position[1] + i as f64 / 9.0 * settings.size;
+            let x = settings.position[0] + i as f64 / 9.0 * settings.size;
+            let y = settings.position[1] + i as f64 / 9.0 * settings.size;
 
-        //     let x2 = settings.position[0] + settings.size;
-        //     let y2 = settings.position[1] + settings.size;
+            let x2 = settings.position[0] + settings.size;
+            let y2 = settings.position[1] + settings.size;
 
-        //     let vline = [x, settings.position[1], x, y2];
-        //     cell_edge.draw(vline, &c.draw_state, c.transform, g);
+            let vline = [x, settings.position[1], x, y2];
+            cell_edge.draw(vline, &c.draw_state, c.transform, g);
 
-        //     let hline = [settings.position[0], y, x2, y];
-        //     cell_edge.draw(hline, &c.draw_state, c.transform, g);
-        // }
+            let hline = [settings.position[0], y, x2, y];
+            cell_edge.draw(hline, &c.draw_state, c.transform, g);
+        }
 
-        for j in 0..7 {
-            for i in 0..7 {
+        for j in 0..9 {
+            for i in 0..9 {
                 let player = controller.gameboard.player([i, j]);
-                let cell_size = settings.size / 8.0;
+                let cell_size = settings.size / 9.0;
                 let pos = [i as f64 * cell_size, j as f64 * cell_size];
                 let cell_rect = [
                     settings.position[0] + pos[0], settings.position[1] + pos[1],

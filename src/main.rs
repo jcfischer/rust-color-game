@@ -33,7 +33,7 @@ mod gameboard_view;
 fn main() {
     let opengl = OpenGL::V3_2;
 
-    let settings = WindowSettings::new("Sudoku", [512; 2])
+    let settings = WindowSettings::new("Tic-Tac-Go", [512; 2])
         .opengl(opengl)
         .exit_on_esc(true);
 

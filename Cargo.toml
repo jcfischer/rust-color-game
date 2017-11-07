@@ -1,6 +1,7 @@
 [package]
-authors = ["Jens-Christian Fischer <jens-christian.fischer@switch.ch>"]
-name = "sudoku"
+authors = ["Jens-Christian Fischer <jcfischer@gmail.com>",
+           "Florian Hanke <florian.hanke@gmail.com>"]
+name = "tic-tac-go"
 version = "0.1.0"
 [dependencies]
 rand = "*"
